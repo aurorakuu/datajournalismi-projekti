@@ -31,6 +31,23 @@ def weather(day, month, year):
     return [rain_text, warmth_text]
 
 
+def weekday(day, month, year):
+    weekdays = {0: "maanantai",
+                1: "tiistai",
+                2: "keskiviikko",
+                3: "torstai",
+                4: "perjantai",
+                5: "lauantai",
+                6: "sunnuntai"}
+
+    timestamp = pd.Timestamp(year=int(year), month=int(month), day=int(day))
+    weekday_number = timestamp.weekday()
+    weekday_result = weekdays[weekday_number]
+    weekday_text = "Päivä oli " + weekday_result + "."
+
+    return weekday_text
+
+
 def get_day_month_year(date):
     day = ""
     month = ""
@@ -67,6 +84,9 @@ def main():
     rain_text = weather_texts[0]
     warmth_text = weather_texts[1]
 
+    weekday_text = weekday(day, month, year)
+
+    print(weekday_text)
     print(rain_text, warmth_text)
 
 
