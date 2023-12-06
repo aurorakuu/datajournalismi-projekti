@@ -3,14 +3,14 @@ import pandas as pd
 
 def weather(day, month, year):
     df_weather = pd.read_csv("saa_seinajoki.csv")
-    year_selected = df_weather["Vuosi"] == int(year)
-    month_selected = df_weather["Kuukausi"] == int(month)
-    day_selected = df_weather["Päivä"] == int(day)
+    year_filtered = df_weather["Vuosi"] == int(year)
+    month_filtered = df_weather["Kuukausi"] == int(month)
+    day_filtered = df_weather["Päivä"] == int(day)
 
-    df_selected = df_weather[year_selected & month_selected & day_selected]
+    df_filtered = df_weather[year_filtered & month_filtered & day_filtered]
 
-    rain = df_selected["Sademäärä [mm]"].values[0]
-    warmth = df_selected["Ilman keskilämpötila [°C]"].values[0]
+    rain = df_filtered["Sademäärä [mm]"].values[0]
+    warmth = df_filtered["Ilman keskilämpötila [°C]"].values[0]
 
     # Sademäärä -1 tarkoittaa, että ei satanut ollenkaan
     # Sademäärä 0 tarkoittaa, että satoi alle 0,1 mm
@@ -26,7 +26,8 @@ def weather(day, month, year):
     else:
         rain_text = "Kyseisenä päivänä satoi runsaasti."
 
-    warmth_text = "Päivän keskilämpötila oli Seinäjoella " + str(warmth) + " astetta."
+    warmth_text = "Päivän keskilämpötila oli Seinäjoella " + str(warmth) + \
+                  " astetta."
 
     return [rain_text, warmth_text]
 
@@ -47,6 +48,21 @@ def weekday(timestamp):
     return weekday_text
 
 
+def population(year):
+
+    population_text = ""
+
+    if int(year) >= 1987:
+        df_population = pd.read_csv("vakiluku_sjoki.csv")
+
+        value = df_population.loc[0, year]
+
+        population_text = "Vuonna " + year + " Seinäjoen väkiluku oli " \
+                          + str(value) + "."
+
+    return population_text
+
+
 def song(timestamp):
     week = timestamp.isocalendar().week
     year = timestamp.isocalendar().year
@@ -55,14 +71,15 @@ def song(timestamp):
 
     if 1994 <= year <= 2019:
         df_songs = pd.read_csv("suomi_singlelista_yksi_1994-2019.csv")
-        year_selected = df_songs["Vuosi"] == year
-        week_selected = df_songs["Viikko"] == week
-        df_selected = df_songs[year_selected & week_selected]
+        year_filtered = df_songs["Vuosi"] == year
+        week_filtered = df_songs["Viikko"] == week
+        df_filtered = df_songs[year_filtered & week_filtered]
 
-        single = df_selected["Single"].values[0]
-        artist = df_selected["Artisti"].values[0]
+        single = df_filtered["Single"].values[0]
+        artist = df_filtered["Artisti"].values[0]
 
-        song_text = "Suomen singlelistan kärjessä oli kyseisellä viikolla artistin " + artist + " kappale " + single + "."
+        song_text = "Suomen singlelistan kärjessä oli kyseisellä viikolla " \
+                    "artistin " + artist + " kappale " + single + "."
 
     return song_text
 
@@ -108,15 +125,15 @@ def main():
 
     song_text = song(timestamp)
 
+    population_text = population(year)
+
     print(weekday_text)
     print(warmth_text, rain_text)
-    print(song_text)
+    if song_text != "":
+        print(song_text)
+    if population_text != "":
+        print(population_text)
 
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
