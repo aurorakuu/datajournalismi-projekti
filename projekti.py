@@ -26,12 +26,12 @@ def weather(day, month, year):
     else:
         rain_text = "Kyseisenä päivänä satoi runsaasti."
 
-    warmth_text = "Päivän keskilämpötila oli " + str(warmth) + " astetta."
+    warmth_text = "Päivän keskilämpötila oli Seinäjoella " + str(warmth) + " astetta."
 
     return [rain_text, warmth_text]
 
 
-def weekday(day, month, year):
+def weekday(timestamp):
     weekdays = {0: "maanantai",
                 1: "tiistai",
                 2: "keskiviikko",
@@ -40,12 +40,31 @@ def weekday(day, month, year):
                 5: "lauantai",
                 6: "sunnuntai"}
 
-    timestamp = pd.Timestamp(year=int(year), month=int(month), day=int(day))
     weekday_number = timestamp.weekday()
     weekday_result = weekdays[weekday_number]
     weekday_text = "Päivä oli " + weekday_result + "."
 
     return weekday_text
+
+
+def song(timestamp):
+    week = timestamp.isocalendar().week
+    year = timestamp.isocalendar().year
+
+    song_text = ""
+
+    if 1994 <= year <= 2019:
+        df_songs = pd.read_csv("suomi_singlelista_yksi_1994-2019.csv")
+        year_selected = df_songs["Vuosi"] == year
+        week_selected = df_songs["Viikko"] == week
+        df_selected = df_songs[year_selected & week_selected]
+
+        single = df_selected["Single"].values[0]
+        artist = df_selected["Artisti"].values[0]
+
+        song_text = "Suomen singlelistan kärjessä oli kyseisellä viikolla artistin " + artist + " kappale " + single + "."
+
+    return song_text
 
 
 def get_day_month_year(date):
@@ -84,10 +103,14 @@ def main():
     rain_text = weather_texts[0]
     warmth_text = weather_texts[1]
 
-    weekday_text = weekday(day, month, year)
+    timestamp = pd.Timestamp(year=int(year), month=int(month), day=int(day))
+    weekday_text = weekday(timestamp)
+
+    song_text = song(timestamp)
 
     print(weekday_text)
-    print(rain_text, warmth_text)
+    print(warmth_text, rain_text)
+    print(song_text)
 
 
 if __name__ == "__main__":
