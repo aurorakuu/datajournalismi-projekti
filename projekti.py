@@ -18,16 +18,16 @@ def weather(day, month, year):
     # Näissä lähteenä Ilmatieteen laitoksen sivuilta löytyvät määritelmät
     rain_text = ""
     if rain < 0.3:
-        rain_text = "Päivä oli poutainen."
+        rain_text = "ja sää oli poutainen."
     elif rain <= 0.9:
-        rain_text = "Kyseisenä päivänä satoi vähän."
+        rain_text = "ja päivä aikana satoi vähän."
     elif rain <= 4.4:
-        rain_text = "Kyseisenä päivänä satoi."
+        rain_text = "ja päivä oli sateinen."
     else:
-        rain_text = "Kyseisenä päivänä satoi runsaasti."
+        rain_text = "ja päivän aikana satoi runsaasti."
 
     warmth_text = "Päivän keskilämpötila oli Seinäjoella " + str(warmth) + \
-                  " astetta."
+                  " astetta,"
 
     return [rain_text, warmth_text]
 
@@ -42,8 +42,7 @@ def weekday(timestamp):
                 6: "sunnuntai"}
 
     weekday_number = timestamp.weekday()
-    weekday_result = weekdays[weekday_number]
-    weekday_text = "Päivä oli " + weekday_result + "."
+    weekday_text = "Päivä, jona synnyit, oli " + weekdays[weekday_number] + "."
 
     return weekday_text
 
