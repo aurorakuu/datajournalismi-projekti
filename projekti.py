@@ -84,6 +84,47 @@ def song(timestamp):
     return song_text
 
 
+def history(year):
+    history_text1 = ""
+
+    if year == 1960:
+        history_text1 = "Seinäjoki sai kaupunkioikeudet synnyinvuonnasi 1960. "
+    elif year == 1961:
+        history_text1 = "Seinäjoki sai kaupunkioikeudet vuonna 1960 eli " \
+                        "vuosi ennen syntymääsi. "
+    else:
+        difference = year - 1960
+        history_text1 = "Seinäjoki sai kaupunkioikeudet vuonna 1960 " \
+                        "eli " + str(difference) + " vuotta ennen syntymääsi. "
+
+    history_text2 = ""
+
+    if year < 2005:
+        history_text2 = "Synnyinvuonnasi Peräseinäjoki, Nurmo ja Ylistaro " \
+                        "olivat vielä omia kuntiaan. Peräseinäjoki " \
+                        "liitettiin Seinäjokeen vuonna 2005 ja Nurmo ja " \
+                        "Ylistaro vuonna 2009."
+    elif year == 2005:
+        history_text2 = "Peräseinäjoki liitettiin Seinäjokeen " \
+                        "synnyinvuonnasi 2005. Nurmo ja Ylistaro olivat " \
+                        "tuolloin vielä omia kuntiaan. Nurmo ja Ylistaro " \
+                        "liitettiin Seinäjokeen vuonna 2009."
+    elif year < 2009:
+        history_text2 = "Synnyinvuonnasi Peräseinäjoki oli jo osa " \
+                        "Seinäjokea. Nurmo ja Ylistaro olivat tuolloin " \
+                        "vielä omia kuntiaan. Nurmo ja Ylistaro liitettiin " \
+                        "Seinäjokeen vuonna 2009."
+    elif year == 2009:
+        history_text2 = "Nurmo ja Ylistaro liitettiin Seinäjokeen " \
+                        "synnyinvuonnasi 2009. Peräseinäjoki oli tuolloin " \
+                        "jo osa Seinäjokea."
+    else:
+        history_text2 = "Synnyinvuonnasi Peräseinäjoki, Nurmo ja Ylistaro " \
+                        "olivat jo osa Seinäjokea."
+
+    return [history_text1, history_text2]
+
+
 def check_validity(day, month, year):
     is_valid_date = True
     is_leap_year = False
@@ -110,7 +151,8 @@ def get_data(day, month, year):
     date = str(day) + "." + str(month) + "." + str(year)
 
     if not check_validity(day, month, year):
-        result_text = "Virheellinen päivämäärä."
+        result_text1 = "Virheellinen päivämäärä."
+        result_text2 = ""
 
     else:
         weather_texts = weather(day, month, year)
@@ -124,7 +166,13 @@ def get_data(day, month, year):
 
         population_text = population(year)
 
-        result_text = weekday_text + warmth_text + rain_text + song_text \
+        history_list = history(year)
+        history_text1 = history_list[0]
+        history_text2 = history_list[1]
+
+        result_text1 = weekday_text + warmth_text + rain_text + song_text \
                       + population_text
 
-    return [date, result_text]
+        result_text2 = history_text1 + history_text2
+
+    return [date, result_text1, result_text2]
