@@ -11,7 +11,7 @@ Seinäjoki silloin kun synnyit
 Ohjelma tarvitsee toimiakseen seuraavat tiedostot:
   saa_seinajoki.csv,
   suomi_singlelista_yksi_1994-2019.csv,
-  vakiluku_sjoki.csv,
+  vakiluku_sjoki.csv
 
 Säätiedot ovat peräisin Ilmatieteen laitoksen Havaintojen lataus -palvelusta.
 Tiedot Seinäjoen väkiluvusta ovat Tilastokeskukselta.
