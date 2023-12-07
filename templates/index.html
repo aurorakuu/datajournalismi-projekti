@@ -6,18 +6,19 @@
 </head>
 <body>
     <h1>Seinäjoki silloin kun synnyit</h1>
-    <p>Valitse päivä</p>
+    <p>Valitse päivä (vuodet 1960–2022).</p>
         <form method="post">
             <label for="day">Päivä:</label>
-            <input type="number" name="day" required>
+            <input type="number" name="day" id="day" required min="1" max="31">
             <label for="month">Kuukausi:</label>
-            <input type="number" name="month" required>
+            <input type="number" name="month" id="month" required min="1" max="12">
             <label for="year">Vuosi:</label>
-            <input type="number" name="year" required>
-            <button type="submit">Katso</button>
+            <input type="number" name="year" id="year" required min="1960" max="2022">
+            <button type="submit">Hae</button>
         </form>
-    {% if result %}
-        <p>{{ result }}</p>
+    {% if result_t %}
+        <h3>{{ result_d }}</h3>
+        <p>{{ result_t }}</p>
     {% endif %}
 
 </body>

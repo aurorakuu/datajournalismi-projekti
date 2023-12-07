@@ -11,9 +11,12 @@ def index():
         month = int(request.form["month"])
         year = int(request.form["year"])
 
-        result_text = get_data(day, month, year)
+        result_list = get_data(day, month, year)
+        result_date = result_list[0]
+        result_text = result_list[1]
 
-        return render_template("index.html", result=result_text)
+        return render_template("index.html", result_t=result_text,
+                               result_d=result_date)
 
     return render_template("index.html")
 

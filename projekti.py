@@ -84,20 +84,47 @@ def song(timestamp):
     return song_text
 
 
+def check_validity(day, month, year):
+    is_valid_date = True
+    is_leap_year = False
+    if (year % 4 == 0 and year % 100 != 0) or year % 400 == 0:
+        is_leap_year = True
+
+    if month == 2:
+        if is_leap_year:
+            if day > 29:
+                is_valid_date = False
+        else:
+            if day > 28:
+                is_valid_date = False
+
+    elif month == 4 or 6 or 9 or 11:
+        if day > 30:
+            is_valid_date = False
+
+    return is_valid_date
+
+
 def get_data(day, month, year):
 
-    weather_texts = weather(day, month, year)
-    rain_text = weather_texts[0]
-    warmth_text = weather_texts[1]
+    date = str(day) + "." + str(month) + "." + str(year)
 
-    timestamp = pd.Timestamp(year=year, month=month, day=day)
-    weekday_text = weekday(timestamp)
+    if not check_validity(day, month, year):
+        result_text = "Virheellinen päivämäärä."
 
-    song_text = song(timestamp)
+    else:
+        weather_texts = weather(day, month, year)
+        rain_text = weather_texts[0]
+        warmth_text = weather_texts[1]
 
-    population_text = population(year)
+        timestamp = pd.Timestamp(year=year, month=month, day=day)
+        weekday_text = weekday(timestamp)
 
-    result_text = weekday_text + warmth_text + rain_text + song_text \
-                  + population_text
+        song_text = song(timestamp)
 
-    return result_text
+        population_text = population(year)
+
+        result_text = weekday_text + warmth_text + rain_text + song_text \
+                      + population_text
+
+    return [date, result_text]
