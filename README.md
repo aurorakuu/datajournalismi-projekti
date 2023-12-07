@@ -9,8 +9,11 @@ Seinäjoki silloin kun synnyit
   tiedot viimeisimpänä syötetystä päivämäärästä.
 
 Ohjelma tarvitsee toimiakseen seuraavat tiedostot:
+
   saa_seinajoki.csv
+  
   suomi_singlelista_yksi_1994-2019.csv
+  
   vakiluku_sjoki.csv
 
 Säätiedot ovat peräisin Ilmatieteen laitoksen Havaintojen lataus -palvelusta.
