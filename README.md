@@ -1,6 +1,7 @@
 # datajournalismi-projekti
 
-Seinäjoki silloin kun synnyit:
+Seinäjoki silloin kun synnyit
+
   Käynnistyessään ohjelma kysyy käyttäjältä päivämäärän. Tämän jälkeen
   ohjelma kertoo tietoja Seinäjoesta tuona kyseisenä päivänä. Mikäli 
   päivämäärä on virheellinen, tulostetaan tieto siitä. Käyttäjä voi jatkaa
