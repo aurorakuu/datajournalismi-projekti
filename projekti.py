@@ -3,9 +3,9 @@ import pandas as pd
 
 def weather(day, month, year):
     df_weather = pd.read_csv("saa_seinajoki.csv")
-    year_filtered = df_weather["Vuosi"] == int(year)
-    month_filtered = df_weather["Kuukausi"] == int(month)
-    day_filtered = df_weather["Päivä"] == int(day)
+    year_filtered = df_weather["Vuosi"] == year
+    month_filtered = df_weather["Kuukausi"] == month
+    day_filtered = df_weather["Päivä"] == day
 
     df_filtered = df_weather[year_filtered & month_filtered & day_filtered]
 
@@ -18,16 +18,16 @@ def weather(day, month, year):
     # Näissä lähteenä Ilmatieteen laitoksen sivuilta löytyvät määritelmät
     rain_text = ""
     if rain < 0.3:
-        rain_text = "ja sää oli poutainen."
+        rain_text = "ja sää oli poutainen. "
     elif rain <= 0.9:
-        rain_text = "ja päivä aikana satoi vähän."
+        rain_text = "ja päivä aikana satoi vähän. "
     elif rain <= 4.4:
-        rain_text = "ja päivä oli sateinen."
+        rain_text = "ja päivä oli sateinen. "
     else:
-        rain_text = "ja päivän aikana satoi runsaasti."
+        rain_text = "ja päivän aikana satoi runsaasti. "
 
     warmth_text = "Päivän keskilämpötila oli Seinäjoella " + str(warmth) + \
-                  " astetta,"
+                  " astetta "
 
     return [rain_text, warmth_text]
 
@@ -42,7 +42,8 @@ def weekday(timestamp):
                 6: "sunnuntai"}
 
     weekday_number = timestamp.weekday()
-    weekday_text = "Päivä, jona synnyit, oli " + weekdays[weekday_number] + "."
+    weekday_text = "Päivä, jona synnyit, oli " + weekdays[weekday_number] \
+                   + ". "
 
     return weekday_text
 
@@ -51,13 +52,13 @@ def population(year):
 
     population_text = ""
 
-    if int(year) >= 1987:
+    if year >= 1987:
         df_population = pd.read_csv("vakiluku_sjoki.csv")
 
-        value = df_population.loc[0, year]
+        value = df_population.loc[0, str(year)]
 
-        population_text = "Vuonna " + year + " Seinäjoen väkiluku oli " \
-                          + str(value) + "."
+        population_text = "Vuonna " + str(year) + " Seinäjoen väkiluku oli " \
+                          + str(value) + ". "
 
     return population_text
 
@@ -78,61 +79,25 @@ def song(timestamp):
         artist = df_filtered["Artisti"].values[0]
 
         song_text = "Suomen singlelistan kärjessä oli kyseisellä viikolla " \
-                    "artistin " + artist + " kappale " + single + "."
+                    "artistin " + artist + " kappale " + single + ". "
 
     return song_text
 
 
-def get_day_month_year(date):
-    day = ""
-    month = ""
-    year = ""
-    current = ""
-    count = 0
-
-    for i in range(len(date)):
-        if date[i] != ".":
-            current += date[i]
-        else:
-            if count == 0:
-                day = current
-
-            elif count == 1:
-                month = current
-            current = ""
-            count += 1
-    year = current
-
-    return [day, month, year]
-
-
-def main():
-    date = input("Choose a date (dd.mm.yyyy): ")
-    # virhetarkistukset
-
-    date_list = get_day_month_year(date)
-    day = date_list[0]
-    month = date_list[1]
-    year = date_list[2]
+def get_data(day, month, year):
 
     weather_texts = weather(day, month, year)
     rain_text = weather_texts[0]
     warmth_text = weather_texts[1]
 
-    timestamp = pd.Timestamp(year=int(year), month=int(month), day=int(day))
+    timestamp = pd.Timestamp(year=year, month=month, day=day)
     weekday_text = weekday(timestamp)
 
     song_text = song(timestamp)
 
     population_text = population(year)
 
-    print(weekday_text)
-    print(warmth_text, rain_text)
-    if song_text != "":
-        print(song_text)
-    if population_text != "":
-        print(population_text)
+    result_text = weekday_text + warmth_text + rain_text + song_text \
+                  + population_text
 
-
-if __name__ == "__main__":
-    main()
+    return result_text
