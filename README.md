@@ -25,4 +25,8 @@ Tiedot Seinäjoen väkiluvusta ovat Tilastokeskukselta.
 Sademäärien sanallisissa kuvauksissa on käytetty lähteenä Ilmatieteen
   laitoksen määritelmiä, jotka löytyvät täältä: https://www.ilmatieteenlaitos.fi/sade
 
+Seinäjoen historiaan liittyvissä tiedoissa (kaupunkioikeudet ja kuntaliitokset) 
+lähteenä on käytetty Seinäjoen kaupungin nettisivuja: 
+  https://www.seinajoki.fi/hallinto/seinajoki-tietoa/historia/
+
 Ohjelman kirjoittaja: Aurora Kuusisto
