@@ -78,8 +78,13 @@ def song(timestamp):
         single = df_filtered["Single"].values[0]
         artist = df_filtered["Artisti"].values[0]
 
+        single_correct = ""
+        for i in range(len(single)):
+            if single[i] != "*":
+                single_correct += single[i]
+
         song_text = "Suomen singlelistan kärjessä oli kyseisellä viikolla " \
-                    "artistin " + artist + " kappale " + single + ". "
+                    "artistin " + artist + " kappale " + single_correct + ". "
 
     return song_text
 
